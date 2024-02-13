@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container-fluid h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col-md-4">
+            <div class="card p-4 shadow">
+                <h3 class="text-center mb-4">Welcome to Chat Room</h3>
+                <div id="name-form">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter your name" id="name-value" autofocus>
+                        <button class="btn btn-primary" id="login">Enter</button>
+                    </div>
+                </div>
+                <div id="chat-room" class="d-none">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 id="name-title"></h5>
+                            <button class="btn btn-outline-danger" id="logout">Logout</button>
+                        </div>
+                        <hr>
+                        <div id="message-container" class="overflow-auto">
+                            <!-- Messages will be displayed here -->
+                        </div>
+                        <div class="input-group mt-3">
+                            <input type="text" class="form-control" placeholder="Enter your message" id="message-value" autofocus>
+                            <button class="btn btn-primary" id="send">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<script>
+    var stompClient = null;
+
+    function connect() {
+        let socket = new SockJS("/server1");
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected :' + frame);
+            $('#name-form').addClass('d-none');
+            $('#chat-room').removeClass('d-none');
+            stompClient.subscribe('/topic/return-to', function (response) {
+                showMessage(JSON.parse(response.body));
+            });
+        });
+    }
+
+    function showMessage(message) {
+        $('#message-container').append(`<p class="mb-2"><strong>${message.name}:</strong> ${message.content}</p>`);
+        // Auto scroll to bottom
+        $('#message-container').scrollTop($('#message-container')[0].scrollHeight);
+    }
+
+    function sendMessage() {
+        let jsonOb = {
+            name: localStorage.getItem('name'),
+            content: $('#message-value').val()
+        };
+        stompClient.send('/app/message', {}, JSON.stringify(jsonOb));
+        // Clear message input after sending
+        $('#message-value').val('');
+    }
+
+    $(document).ready(() => {
+        $('#login').click(() => {
+            let name = $('#name-value').val().trim();
+            if (name !== '') {
+                localStorage.setItem('name', name);
+                $('#name-title').html(`<strong>Welcome ${name}</strong>`);
+                connect();
+            } else {
+                alert('Please enter your name!');
+            }
+        });
+
+        $('#send').click(() => {
+            sendMessage();
+        });
+
+        $('#logout').click(() => {
+            localStorage.removeItem('name');
+            if (stompClient !== null) {
+                stompClient.disconnect();
+                $('#chat-room').addClass('d-none');
+                $('#name-form').removeClass('d-none');
+            }
+        });
+
+        // Submit message on pressing Enter key
+        $('#message-value').keypress((e) => {
+            if (e.which === 13) {
+                sendMessage();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

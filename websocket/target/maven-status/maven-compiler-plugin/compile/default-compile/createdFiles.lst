@@ -1,0 +1,4 @@
+com\ws\controllers\MessageController.class
+com\ws\config\Config.class
+com\ws\models\Message.class
+com\ws\WebsocketApplication.class
