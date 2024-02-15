@@ -1,3 +1,38 @@
 #name-from{
 	height:100vh;
+}/* Chat message container */
+.chat-message {
+    background-color: rgb(221, 253, 255); /* Blue background color */
+    border-radius: 10px; /* Rounded corners */
+    padding: 15px; /* Padding */
+    margin-bottom: 20px; /* Spacing between messages */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop shadow */
+}
+
+/* Message header */
+.message-header {
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space sender name and time */
+    align-items: center; /* Center vertically */
+    margin-bottom: 10px; /* Spacing */
+}
+
+/* Sender name */
+.font-style {
+    font-weight: bold; /* Bold text */
+    color: #00adb5; /* Blue color */
+}
+
+/* Message time */
+.message-time {
+    font-size: 12px; /* Small font size */
+    color: rgb(255, 0, 0); /* Gray color */
+    font-weight: bold;
+}
+
+/* Message content */
+.message-content {
+    font-size: 16px; /* Normal font size */
+    color: rgb(2,0,36); /* Dark color */
+    line-height: 1.6; /* Line height */
 }

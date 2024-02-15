@@ -9,32 +9,38 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body style="background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(255,111,97,1) 50%, rgba(0,212,255,1) 100%);">
 
 <div class="container-fluid h-100">
     <div class="row justify-content-center align-items-center h-100">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card p-4 shadow">
-                <h3 class="text-center mb-4">Welcome to Chat Room</h3>
+                <h3 class="text-center mb-4 font-style">
+    <b style="font-family: 'Pacifico', cursive; color: #ff6f61; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Welcome to</b>
+    <span style="font-family: 'Roboto', sans-serif; color: #00adb5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Interaction</span>
+    <span style="font-family: 'Lobster', cursive; color: #393e46; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Island</span>
+</h3>
                 <div id="name-form">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Enter your name" id="name-value" autofocus>
-                        <button class="btn btn-primary" id="login">Enter</button>
-                    </div>
+    <input type="text" class="form-control" placeholder="Enter your name" id="name-value" autofocus style="font-family: 'Roboto', sans-serif; color: #00adb5; background-color: #ffffff; border-color: #00adb5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+    <button class="btn btn-success" id="login" style="font-family: 'Roboto', sans-serif; background-color: #00adb5; border-color: #00adb5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);"><b>Enter</b></button>
+</div>
                 </div>
                 <div id="chat-room" class="d-none">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 id="name-title"></h5>
-                            <button class="btn btn-outline-danger" id="logout">Logout</button>
+                            <h5 id="name-title" class="font-style"></h5>
+<button class="btn btn-success" id="logout" style="font-family: 'Roboto', sans-serif; background-color: #ff6f61; border-color: #ff6f61; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);"><b>Logout</b></button>
+
                         </div>
                         <hr>
                         <div id="message-container" class="overflow-auto">
                             <!-- Messages will be displayed here -->
                         </div>
                         <div class="input-group mt-3">
-                            <input type="text" class="form-control" placeholder="Enter your message" id="message-value" autofocus>
-                            <button class="btn btn-primary" id="send">Send</button>
+                            <input type="text" class="form-control" placeholder="Enter your message" id="message-value" autofocus style="font-family: 'Roboto', sans-serif; color: #00adb5; background-color: #ffffff; border-color: #00adb5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">
+                            <button class="btn btn-success" id="send" style="font-family: 'Roboto', sans-serif; background-color: #00adb5; border-color: #00adb5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);"><b>Send</b></button>
                         </div>
                     </div>
                 </div>
@@ -67,15 +73,29 @@
     }
 
     function showMessage(message) {
-        $('#message-container').append(`<p class="mb-2"><strong>${message.name}:</strong> ${message.content}</p>`);
+        $('#message-container').append(`
+        <div class="chat-message">
+    <div class="message-header">
+        <div class="font-style"><b style="font-family: 'Pacifico', cursive; color: #ff6f61; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">${message.name}</b></div>
+        <div class="message-time"><span style="font-family: 'Roboto', sans-serif; color: #00adb5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">${message.time}</span></div>
+    </div>
+    <div class=""><span style="font-family: 'Lobster', cursive; color: #393e46; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">${message.content}</span></div>
+</div>
+
+        `);
         // Auto scroll to bottom
         $('#message-container').scrollTop($('#message-container')[0].scrollHeight);
     }
 
     function sendMessage() {
+		let currentDate = new Date();
+		// Format the date and time as desired
+    	let formattedDate = currentDate.toLocaleDateString(); // Format: MM/DD/YYYY
+    	let formattedTime = currentDate.toLocaleTimeString(); // Format: HH:MM:SS AM/PM
         let jsonOb = {
             name: localStorage.getItem('name'),
-            content: $('#message-value').val()
+            content: $('#message-value').val(),
+            time: formattedTime
         };
         stompClient.send('/app/message', {}, JSON.stringify(jsonOb));
         // Clear message input after sending
@@ -87,7 +107,10 @@
             let name = $('#name-value').val().trim();
             if (name !== '') {
                 localStorage.setItem('name', name);
-                $('#name-title').html(`<strong>Welcome ${name}</strong>`);
+                $('#name-title').html(`
+                <b style="font-family: 'Pacifico', cursive; color: #ff6f61; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Welcome</b>
+                <span style="font-family: 'Roboto', sans-serif; color: #00adb5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">${name}</span>
+                `);
                 connect();
             } else {
                 alert('Please enter your name!');
