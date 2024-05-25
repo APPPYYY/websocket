@@ -1,2 +1,2 @@
 # websocket
-a dynamic group chat application built using Spring Boot WebSockets!
+Dynamic Group Chat: 💬 Spring Boot WebSockets unite! Experience real-time group chat dynamics. Join the conversation! 🌐
