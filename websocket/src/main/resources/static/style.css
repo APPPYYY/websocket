@@ -1,38 +1,115 @@
-#name-from{
-	height:100vh;
-}/* Chat message container */
-.chat-message {
-    background-color: rgb(221, 253, 255); /* Blue background color */
-    border-radius: 10px; /* Rounded corners */
-    padding: 15px; /* Padding */
-    margin-bottom: 20px; /* Spacing between messages */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Drop shadow */
+/* Custom styles for the chat room */
+body.bg-gradient {
+	background: rgb(2, 0, 36);
+	background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(255, 111, 97, 1) 50%, rgba(0, 212, 255, 1) 100%);
+	font-family: 'Roboto', sans-serif;
+	height: 100vh;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-/* Message header */
-.message-header {
-    display: flex; /* Use flexbox for layout */
-    justify-content: space-between; /* Space sender name and time */
-    align-items: center; /* Center vertically */
-    margin-bottom: 10px; /* Spacing */
+.card {
+	border-radius: 15px;
 }
 
-/* Sender name */
-.font-style {
-    font-weight: bold; /* Bold text */
-    color: #00adb5; /* Blue color */
+.welcome-text {
+	font-family: 'Pacifico', cursive;
+	font-size: 2.5rem;
+	color: #ff6f61;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Message time */
+.brand-name {
+	font-family: 'Pacifico', sans-serif;
+	color: #00adb5;
+	font-size: 2.5rem;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.profile-card {
+	max-width: 100%;
+	margin-bottom: 10px;
+	border-radius: 10px;
+}
+
+.status-section {
+	margin-top: 20px;
+}
+
+.status {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.status-img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.status-info {
+	font-size: 14px;
+}
+
+.message-author {
+	text-transform: capitalize;
+	font-family: 'Great Vibes', cursive;
+	font-weight: normal;
+	color: #00adb5;
+	/* Aqua color */
+}
+
 .message-time {
-    font-size: 12px; /* Small font size */
-    color: rgb(255, 0, 0); /* Gray color */
-    font-weight: bold;
+	color: #666;
+	/* Subtle gray color for timestamp */
+	font-size: 0.9em;
+	/* Slightly smaller font size */
 }
 
-/* Message content */
 .message-content {
-    font-size: 16px; /* Normal font size */
-    color: rgb(2,0,36); /* Dark color */
-    line-height: 1.6; /* Line height */
+	font-family: 'Lobster', cursive;
+	color: #006d77;
+	/* Dark teal shade */
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
+
+
+@media (max-width: 991px) {
+	.bg-gradient {
+		background: #f0f0f0;
+		/* Fallback color */
+	}
+
+	.row.h-100 {
+		height: auto;
+	}
+
+	.col-lg-3.d-none.d-lg-block {
+		display: block !important;
+	}
+}
+
+.welcome-user-msg {
+	font-family: 'Pacifico', cursive;
+	font-size: 1.5rem;
+	color: #ff6f61;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+	text-transform: capitalize;
+}
+.custom-footer{
+	font-family: 'Lobster', cursive;
+	font-size: 1rem;
+	color: #ff6f61;
+	text-transform: capitalize;
+	text-decoration: none;
+}
+.author-name{
+	font-family: 'Pacifico', cursive;
+	font-size: 1.2rem;
+	text-decoration: none;
+}
+
